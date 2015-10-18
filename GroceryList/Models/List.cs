@@ -11,7 +11,7 @@ namespace GroceryList.Models
         public int Id { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date)] 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }

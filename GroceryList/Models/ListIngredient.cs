@@ -18,7 +18,7 @@ namespace GroceryList.Models
         public int ListId { get; set; }
         public bool Retrieved { get; set; }
 
-        public virtual List Lint { get; set; }
+        public virtual List List { get; set; }
         public virtual Ingredient Ingredient { get; set; }
     }
 }

@@ -15,7 +15,8 @@ namespace GroceryList.DAL
                 new GroceryStoreSection {Id = 1, Name = "Produce" },
                 new GroceryStoreSection {Id = 2, Name = "Deli" },
                 new GroceryStoreSection {Id = 3, Name = "Meat" },
-                new GroceryStoreSection {Id = 4, Name = "Dairy" }
+                new GroceryStoreSection {Id = 4, Name = "Dairy" },
+                new GroceryStoreSection {Id = 4, Name = "Snack" },
             };
 
             groceryStoreSections.ForEach(g => context.GroceryStoreSections.Add(g));

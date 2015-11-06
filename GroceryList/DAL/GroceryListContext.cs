@@ -8,7 +8,8 @@ namespace GroceryList.DAL
     {
         public GroceryListContext() : base("GroceryListContext")
         {
-
+            this.Database.Connection.ConnectionString =
+                "Data Source=localhost;Initial Catalog=GroceryList;Integrated Security=SSPI;MultipleActiveResultSets=True";
         }
 
         public DbSet<List> Lists { get; set; }

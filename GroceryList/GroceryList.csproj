@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\IngredientsTestController.cs" />
+    <Compile Include="ListsController.cs" />
     <Compile Include="Migrations\201510230215402_InitialCreate.cs" />
     <Compile Include="Migrations\201510230215402_InitialCreate.Designer.cs">
       <DependentUpon>201510230215402_InitialCreate.cs</DependentUpon>
@@ -254,6 +255,11 @@
     <Content Include="Views\IngredientsTest\Details.cshtml" />
     <Content Include="Views\IngredientsTest\Edit.cshtml" />
     <Content Include="Views\IngredientsTest\Index.cshtml" />
+    <Content Include="Views\Lists\Create.cshtml" />
+    <Content Include="Views\Lists\Delete.cshtml" />
+    <Content Include="Views\Lists\Details.cshtml" />
+    <Content Include="Views\Lists\Edit.cshtml" />
+    <Content Include="Views\Lists\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

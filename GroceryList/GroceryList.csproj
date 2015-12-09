@@ -177,7 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\IngredientsTestController.cs" />
-    <Compile Include="ListsController.cs" />
+    <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Migrations\201510230215402_InitialCreate.cs" />
     <Compile Include="Migrations\201510230215402_InitialCreate.Designer.cs">
       <DependentUpon>201510230215402_InitialCreate.cs</DependentUpon>

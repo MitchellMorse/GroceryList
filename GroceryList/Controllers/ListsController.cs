@@ -34,6 +34,13 @@ namespace GroceryList
             {
                 return HttpNotFound();
             }
+            
+            list.UnusedIngredients =
+                db.Ingredients.OrderBy(i => i.Name)
+                    .Select(i => new SelectListItem() {Text = i.Name, Value = i.Id.ToString()})
+                    .ToList();
+
+
             return View(list);
         }
 

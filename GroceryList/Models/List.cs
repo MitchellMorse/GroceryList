@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace GroceryList.Models
 {
@@ -16,6 +18,9 @@ namespace GroceryList.Models
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
-        public virtual ICollection<ListIngredient> ListIngredients { get; set; } 
+        [NotMapped]
+        public virtual List<SelectListItem> UnusedIngredients { get; set; }
+        [NotMapped]
+        public int SelectedIngredientId { get; set; }
     }
 }

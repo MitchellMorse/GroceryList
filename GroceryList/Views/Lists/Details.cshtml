@@ -1,4 +1,5 @@
-﻿@model GroceryList.Models.List
+﻿@using GroceryList.Models
+@model GroceryList.Models.List
 
 @{
     ViewBag.Title = "Details";
@@ -27,6 +28,11 @@
         </dd>
 
     </dl>
+</div>
+<div>
+    @*TODO: this is causing a ysod when hitting the lists page, need to figure out why*@
+    @*@Html.DropDownListFor(x => x.Id, new SelectList(Model.))*@
+    @Html.DropDownListFor(x => x.SelectedIngredientId, Model.UnusedIngredients)
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

@@ -36,10 +36,30 @@ namespace GroceryList
             }
             
             list.UnusedIngredients =
-                db.Ingredients.OrderBy(i => i.Name)
+                db.Ingredients.OrderBy(i => i.Name).Where(i => !db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
                     .Select(i => new SelectListItem() {Text = i.Name, Value = i.Id.ToString()})
                     .ToList();
 
+
+            return View(list);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Details([Bind(Include = "Id,SelectedIngredientId")] List list)
+        {
+            if (ModelState.IsValid && list.SelectedIngredientId > 0)
+            {
+                ListIngredient li = new ListIngredient()
+                {
+                    IngredientId = list.SelectedIngredientId,
+                    ListId = list.Id
+                };
+
+                db.ListIngredients.Add(li);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Details", new {id = list.Id});
+            }
 
             return View(list);
         }

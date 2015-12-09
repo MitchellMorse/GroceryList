@@ -18,6 +18,7 @@ namespace GroceryList.Models
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
+        //TODO: look into viewmodels to put these into instead of in my data model
         [NotMapped]
         public virtual List<SelectListItem> UnusedIngredients { get; set; }
         [NotMapped]

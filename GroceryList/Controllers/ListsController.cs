@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using GroceryList.DAL;
 using GroceryList.Models;
+using GroceryList.ViewModels;
 
 namespace GroceryList
 {
@@ -34,34 +35,37 @@ namespace GroceryList
             {
                 return HttpNotFound();
             }
-            
-            list.UnusedIngredients =
-                db.Ingredients.OrderBy(i => i.Name).Where(i => !db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
-                    .Select(i => new SelectListItem() {Text = i.Name, Value = i.Id.ToString()})
-                    .ToList();
 
+            var listIngredients = new ListIngredients();
+            listIngredients.UnusedIngredients = db.Ingredients.OrderBy(i => i.Name).Where(i => !db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
+                                                .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() })
+                                                .ToList();
 
-            return View(list);
+            listIngredients.CurrentList = list;
+            listIngredients.CurrentListId = list.Id;
+
+            return View(listIngredients);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("AddIngredientToList")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Details([Bind(Include = "Id,SelectedIngredientId")] List list)
+        public async Task<ActionResult> Details([Bind(Include = "CurrentListId,SelectedIngredientId")] ListIngredients listIngredients, int listId)
         {
-            if (ModelState.IsValid && list.SelectedIngredientId > 0)
+            //TODO: figure out how to get the selected ingredientId
+            if (ModelState.IsValid && listIngredients.SelectedIngredientId > 0)
             {
                 ListIngredient li = new ListIngredient()
                 {
-                    IngredientId = list.SelectedIngredientId,
-                    ListId = list.Id
+                    IngredientId = listIngredients.SelectedIngredientId,
+                    ListId = listId
                 };
 
                 db.ListIngredients.Add(li);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", new {id = list.Id});
+                return RedirectToAction("Details", new { id = listId });
             }
-
-            return View(list);
+            
+            return RedirectToAction("Index");
         }
 
         // GET: Lists/Create

@@ -1,5 +1,5 @@
 ﻿@using GroceryList.Models
-@model GroceryList.Models.List
+@model GroceryList.ViewModels.ListIngredients
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 
 <h2>Details</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddIngredientToList", "Lists", new { listId = Model.CurrentListId}))
 {
     @Html.AntiForgeryToken()
     <div>
@@ -15,19 +15,19 @@
         <hr/>
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.CurrentList.Name)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => model.CurrentList.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                @Html.DisplayNameFor(model => model.CurrentList.DateCreated)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.DateCreated)
+                @Html.DisplayFor(model => model.CurrentList.DateCreated)
             </dd>
 
         </dl>
@@ -37,11 +37,11 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default"/>
+            <input type="submit" value="Add selected item to list" class="btn btn-default"/>
         </div>
     </div>
 }
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CurrentList.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

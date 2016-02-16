@@ -15,6 +15,8 @@ namespace GroceryList.ViewModels
 
         public virtual List<SelectListItem> UnusedIngredients { get; set; }
 
+        public virtual List<Ingredient> AddedIngredients { get; set; }
+
         public int SelectedIngredientId { get; set; }
     }
 }

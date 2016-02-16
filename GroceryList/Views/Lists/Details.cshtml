@@ -32,6 +32,26 @@
 
         </dl>
     </div>
+    <h4>Items on List</h4>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AddedIngredients.First().Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.AddedIngredients)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+
+    </table>
+
     <div>
         @Html.DropDownListFor(x => x.SelectedIngredientId, Model.UnusedIngredients)
     </div>

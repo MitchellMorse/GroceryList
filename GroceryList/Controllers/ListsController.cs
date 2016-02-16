@@ -41,6 +41,10 @@ namespace GroceryList
                                                 .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() })
                                                 .ToList();
 
+            listIngredients.AddedIngredients = db.Ingredients.OrderBy(i => i.Name).Where(i => db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
+                                                .Select(i => i)
+                                                .ToList();
+
             listIngredients.CurrentList = list;
             listIngredients.CurrentListId = list.Id;
 
@@ -51,7 +55,6 @@ namespace GroceryList
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Details([Bind(Include = "CurrentListId,SelectedIngredientId")] ListIngredients listIngredients, int listId)
         {
-            //TODO: figure out how to get the selected ingredientId
             if (ModelState.IsValid && listIngredients.SelectedIngredientId > 0)
             {
                 ListIngredient li = new ListIngredient()

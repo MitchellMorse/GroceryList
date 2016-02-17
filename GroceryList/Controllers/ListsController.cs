@@ -36,19 +36,41 @@ namespace GroceryList
                 return HttpNotFound();
             }
 
-            var listIngredients = new ListIngredients();
-            listIngredients.UnusedIngredients = db.Ingredients.OrderBy(i => i.Name).Where(i => !db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
-                                                .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() })
-                                                .ToList();
+            var listIngredients = SetupListIngredientsView(id, list);
 
-            listIngredients.AddedIngredients = db.Ingredients.OrderBy(i => i.Name).Where(i => db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
-                                                .Select(i => i)
-                                                .ToList();
+            return View(listIngredients);
+        }
+
+        private ListIngredients SetupListIngredientsView(int? id, List list)
+        {
+            var listIngredients = new ListIngredients();
+            listIngredients.UnusedIngredients =
+                db.Ingredients.OrderBy(i => i.Name)
+                    .Where(i => !db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
+                    .Select(i => new SelectListItem() {Text = i.Name, Value = i.Id.ToString()})
+                    .ToList();
+
+            listIngredients.AddedIngredients =
+                db.Ingredients.OrderBy(i => i.Name)
+                    .Where(i => db.ListIngredients.Any(li => li.ListId == id && li.IngredientId == i.Id))
+                    .Select(i => i)
+                    .ToList();
 
             listIngredients.CurrentList = list;
             listIngredients.CurrentListId = list.Id;
+            return listIngredients;
+        }
 
-            return View(listIngredients);
+        [HttpPost, ActionName("RemoveTest")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoveTest(int ingredientId, int listId)
+        {
+            ListIngredient listIngredient = db.ListIngredients.Single(li => li.IngredientId == ingredientId && li.ListId == listId);
+
+            db.ListIngredients.Remove(listIngredient);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = listId });
         }
 
         [HttpPost, ActionName("AddIngredientToList")]

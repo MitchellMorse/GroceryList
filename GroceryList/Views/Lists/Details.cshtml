@@ -7,69 +7,28 @@
 
 <h2>Details</h2>
 
-@using (Html.BeginForm("AddIngredientToList", "Lists", new { listId = Model.CurrentListId }))
-{
-    @Html.AntiForgeryToken()
-    <div>
-        <h4>List</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentList.Name)
-            </dt>
+<div>
+    <h4>List</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentList.Name)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CurrentList.Name)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentList.Name)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentList.DateCreated)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentList.DateCreated)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CurrentList.DateCreated)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentList.DateCreated)
+        </dd>
 
-        </dl>
-    </div>
-    @*<h4>Items on List</h4>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddedIngredients.First().Name)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.AddedIngredients)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Remove from list", "Remove", new { ingredientId = item.Id, listId = Model.CurrentListId })
-                    </td>
-                </tr>
-            }
-
-        </table>*@
-
-    <div>
-        @Html.DropDownListFor(x => x.SelectedIngredientId, Model.UnusedIngredients)
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add selected item to list" class="btn btn-default" />
-        </div>
-    </div>
-}
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CurrentList.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-@Html.AntiForgeryToken()
+    </dl>
+</div>
 <h4>Items on List</h4>
 <table class="table">
     <tr>
@@ -86,13 +45,50 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @using (Html.BeginForm("RemoveTest", "Lists", new { ingredientId = item.Id, listId = Model.CurrentListId }))
+                @using (Html.BeginForm("RemoveTest", "Lists", new {ingredientId = item.Id, listId = Model.CurrentListId}))
                 {
                     @Html.AntiForgeryToken()
-                    <input type="submit" value="Remove" class="btn btn-default" />
+                    <input type="submit" value="Remove" class="btn btn-default"/>
                 }
             </td>
         </tr>
     }
 
 </table>
+
+
+<input type="text" id="txtbxFilter" placeholder="Filter"/>
+@using (Html.BeginForm("AddIngredientToList", "Lists", new { listId = Model.CurrentListId }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @*@Html.DropDownListFor(x => x.SelectedIngredientId, Model.UnusedIngredients.Where(u => u.Text.Contains("Ban")))*@
+        @Html.DropDownListFor(x => x.SelectedIngredientId, Model.UnusedIngredients, new {@id="drpdwnUnusedIngredients"})
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add selected item to list" class="btn btn-default" />
+        </div>
+    </div>
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.CurrentList.Id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        //(function() {
+        //    $("#txtbxFilter").keyup(FilterModified);
+        //});
+
+        $("#txtbxFilter").keyup(function() {
+            alert('testing');
+        });
+
+        //function FilterModified(eventInstance) {
+        //    alert('wabam!');
+        //}
+    </script>
+}
